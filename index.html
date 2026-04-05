@@ -2,40 +2,68 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>CBT REPRO FULL</title>
+<title>Quiz Asterion 22 – Lecture 1–12</title>
 
 <style>
-body { font-family: Arial; background:#f5f5f5; }
+body { font-family: Arial; margin:0; background:#f5f5f5; }
+
 .container {
-    max-width:800px;
+    max-width:900px;
     margin:auto;
     background:white;
     padding:20px;
     border-radius:10px;
     margin-top:40px;
 }
+
+.home {
+    text-align:center;
+    padding:120px 20px;
+}
+
+.go-btn {
+    font-size:24px;
+    padding:15px 40px;
+    background:#28a745;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+
 .options label {
     display:block;
     margin:8px 0;
-    padding:10px;
+    padding:12px;
     border:1px solid #ddd;
     border-radius:6px;
     cursor:pointer;
 }
+
 .correct { background:#d4edda; }
 .wrong { background:#f8d7da; }
+
 .explain {
-    margin-top:10px;
-    background:#fff3cd;
+    margin-top:15px;
     padding:10px;
-    border-radius:6px;
+    border-radius:8px;
+    background:#fff3cd;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- HOME -->
+<div id="home" class="container home">
+<h1>📚 Quiz Asterion 22</h1>
+<h3>Lecture 1–12 (Reproductive System)</h3>
+<br>
+<button class="go-btn" onclick="startQuiz()">START</button>
+</div>
+
+<!-- QUIZ -->
+<div id="quizContainer" class="container" style="display:none;">
 <h3 id="question"></h3>
 <div id="options" class="options"></div>
 <div id="explain" class="explain" style="display:none;"></div>
@@ -44,284 +72,468 @@ body { font-family: Arial; background:#f5f5f5; }
 </div>
 
 <script>
-let current=0;
-let score=0;
-let answered=false;
+let current = 0;
+let score = 0;
+let answered = false;
 
-let questions=[
+let questions = [
 
-// ===== LECTURE 1 =====
 {
-q:"15. Bagian tersempit tuba uterina?",
-options:["Suspensory ligament","Inferoanterior","Uterotubal junction","Parametrium","Di atas ureter"],
+q:"15. Mana pernyataan yang benar di bawah ini tentang anatomi organ panggul pada wanita?",
+options:[
+"Ovarium difiksasi oleh suspensory ligament dengan uterus",
+"Posisi ovarium berada di inferoanterior dari tube uterina",
+"Lumen tuba uterina yang paling sempit berada pada bagian uterotubal junction",
+"Uterus dibagi menjadi: endometrium, myometrium dan parametrium",
+"Vaskularisasi uterus adalah uterine artery, yang posisinya berada di atas ureter"
+],
 answer:2,
-explain:"Bagian tersempit = uterotubal junction."
+explain:"Bagian tersempit tuba uterina adalah uterotubal junction."
 },
+
 {
-q:"52. Saraf di atas piriformis?",
-options:["Obturator","Sciatic","Pudendal","Superior gluteal","Inferior gluteal"],
+q:"52. Apakah cabang sacral plexus yang keluar dari pelvis, dan melewati the greater sciatic foramen di atas m.piriformis?",
+options:[
+"Obturator nerve",
+"Sciatic nerve",
+"Pudendal nerve",
+"Superior gluteal nerve",
+"Inferior gluteal nerve"
+],
 answer:3,
-explain:"Superior gluteal keluar di atas piriformis."
-},
-{
-q:"72. Asal vagina atas?",
-options:["Paramesonephric","Sinovaginal","Urogenital","Mesonephric","Ektoderm"],
-answer:0,
-explain:"Mullerian duct."
-},
-{
-q:"73. True conjugate?",
-options:["Atas symphysis","Bawah","Tengah","L5","SIAS"],
-answer:0,
-explain:"Atas symphysis ke promontorium."
+explain:"Superior gluteal nerve keluar di atas piriformis."
 },
 
-// ===== LECTURE 2 =====
 {
-q:"4. Pembentukan testis?",
-options:["Paramesonephric","Leydig MIS","Cortical cord","Medullary cord","Tipis"],
+q:"72. Dari mana vagina bagian atas pada wanita berasal secara embryologi?",
+options:[
+"Bagian atas dari paramesonephric ducts",
+"Bagian tengah dari paramesonephric ducts",
+"Bagian bawah dari paramesonephric ducts",
+"Sinovaginal bulbs",
+"Urogenital sinus"
+],
+answer:0,
+explain:"Vagina atas berasal dari Mullerian duct."
+},
+
+{
+q:"73. Apa yang dimaksud dengan true (obstretic) conjugate?",
+options:[
+"Jarak antara bagian atas dalam symphysis pubis dengan promontorium",
+"Jarak antara bagian bawah dalam symphysis pubis dengan promontorium",
+"Jarak antara bagian tengah dalam symphysis pubis dengan promontorium",
+"Jarak antara processus spinosus lumbal lima dengan promontorium",
+"Jarak antara spina iliaca anterior superior kanan dan kiri"
+],
+answer:0,
+explain:"True conjugate dari symphysis bagian atas ke promontorium."
+},
+
+{
+q:"4. Mana pernyataan yang benar bila testis terbentuk?",
+options:[
+"Paramesonephric duct yang berkembang",
+"Adanya MIS yang dihasilkan oleh sel Leydig",
+"Cortical cord berkembang",
+"Medullary cord berkembang",
+"Terdapat tunica albigenia yang tebal"
+],
 answer:3,
-explain:"Testis dari medullary cord."
+explain:"Testis berkembang dari medullary cord."
 },
+
 {
-q:"59. Bukan perineum?",
-options:["Pubococcygeus","Bulbospongiosus","Ischiocavernosus","Deep transverse","External anal"],
+q:"59. Otot yang 'tidak' ikut membentuk perineum?",
+options:[
+"Pubococcygeus",
+"Bulbospongiosus",
+"Ischiocavernosus",
+"Deep transverse perineal",
+"External anal sphincter"
+],
 answer:0,
-explain:"Pubococcygeus bukan perineum."
+explain:"Pubococcygeus termasuk pelvic floor."
 },
+
 {
-q:"76. Sisa Mullerian?",
-options:["Appendix testis","Appendix epididymis","Utriculus","Epigenital","Paragenital"],
+q:"76. Apa organ di bawah ini yang merupakan sisa-sisa paramesonephric (Mullerian) duct?",
+options:[
+"Appendix testis",
+"Appendix epididymis",
+"Utriculus epididymis",
+"Epigenital tubules",
+"Paragenital tubules"
+],
 answer:0,
-explain:"Appendix testis."
+explain:"Appendix testis adalah sisa Mullerian duct."
 },
+
 {
-q:"82. Organ pria?",
-options:["Sertoli buat testosteron","DHT internal","Mullerian jadi vas","Genital tubercle → phallus","Epispadia"],
+q:"82. Mana pernyataan yang benar di bawah ini mengenai pembentukan organ reproduksi pria?",
+options:[
+"Mullerian inhibiting substance (MIS) dan testosteron diproduksi oleh sel Sertoli",
+"Dehidrotestosteron akan membentuk internal genital organs",
+"Paramesonephric duct akan membentuk vas defferent dan epididymis",
+"Genital tubercle yang terbentuk nantinya akan menjadi phallus",
+"Urethral fold yang tidak menutup menyebabkan terjadinya epispadia"
+],
 answer:3,
-explain:"Tubercle → phallus."
+explain:"Genital tubercle berkembang menjadi phallus."
 },
 
-// ===== LECTURE 3 =====
 {
-q:"53. Corpus luteum?",
-options:["Sebelum","Setelah ovulasi","Fertilisasi","Implantasi","Menstruasi"],
-answer:1,
-explain:"Setelah ovulasi."
-},
-{
-q:"60. Folikel sekunder?",
-options:["Oosit primer + cairan","Oosit sekunder","Primer saja","Selapis","Sekunder tanpa cairan"],
+q:"53. Manakah pernyataan dibawah ini yang benar untuk corpus luteum?",
+options:[
+"Dibentuk oleh granulosa lutein cells dan theca lutein cells setelah folikel mengalami ovulasi",
+"Dibentuk sebelum ovulasi",
+"Dibentuk setelah hCG",
+"Dibentuk setelah fertilisasi",
+"Dibentuk setelah implantasi"
+],
 answer:0,
-explain:"Sudah ada antrum."
+explain:"Corpus luteum terbentuk setelah ovulasi."
 },
 
-// ===== LECTURE 4 =====
 {
-q:"31. Prostat?",
-options:["Kolumnar + otot polos uretra","Kelilingi vas","Otot skelet","Epitel pipih","Pars spongiosa"],
+q:"60. Manakah pernyataan dibawah ini yang benar untuk folikel sekunder?",
+options:[
+"Disusun oleh oosit primer, dibungkus oleh sel epitel berlapis kubus dan ada cairan follikuler",
+"Oosit sekunder",
+"Oosit primer tanpa cairan",
+"Selapis kubus",
+"Oosit sekunder tanpa cairan"
+],
 answer:0,
-explain:"Mengelilingi uretra prostatika."
-},
-{
-q:"99. Vas deferens?",
-options:["Pseudostratified + stereocilia","Cilia","Transisional","Otot skelet","Kolumnar"],
-answer:0,
-explain:"Ciri khas stereocilia."
-},
-
-// ===== LECTURE 5 =====
-{
-q:"1. Spermatogenesis hormon?",
-options:["FSH","Testosteron","LH","GnRH","Estrogen"],
-answer:0,
-explain:"FSH → Sertoli."
-},
-{
-q:"68. Rambut pubertas?",
-options:["Androgen","Testosteron","FSH","LH","GnRH"],
-answer:0,
-explain:"Androgen effect."
+explain:"Folikel sekunder sudah memiliki antrum."
 },
 
-// ===== LECTURE 6 =====
 {
-q:"9. Ovulasi?",
-options:["LH surge","FSH","Progesteron","Estrogen turun","Prolaktin"],
+q:"31. Manakah pernyataan di bawah ini yang benar tentang kelenjar Prostat?",
+options:[
+"Parenkim berupa sel selapis kolumnar dengan stroma mengandung banyak sel otot polos yang melingkari uretra",
+"Kelilingi vas deferens",
+"Otot skelet",
+"Epitel pipih",
+"Pars spongiosa"
+],
 answer:0,
-explain:"LH surge."
-},
-{
-q:"37. Fase luteal?",
-options:["Progesteron dominan","Estrogen dominan","GnRH","LH tinggi","Progesteron turun"],
-answer:0,
-explain:"Progesteron > estrogen."
-},
-
-// ===== LECTURE 7 =====
-{
-q:"6. Obstetric vs embryonic?",
-options:["Obstetric 2 minggu lebih awal","Embryonic lebih awal","Sama","4 minggu","Tidak pasti"],
-answer:0,
-explain:"Dari HPHT."
-},
-{
-q:"62. Down syndrome?",
-options:["Down","Turner","Edward","Patau","Klinefelter"],
-answer:0,
-explain:"Simian crease."
-},
-{
-q:"77. Konfirmasi janin?",
-options:["Amniosentesis","NIPT","Maternal","Serum","USG"],
-answer:0,
-explain:"Diagnosis pasti."
-},
-{
-q:"93. Minggu 2?",
-options:["Bilaminar","Trilaminar","Somite","Migrasi","Gastrulasi"],
-answer:0,
-explain:"Epiblast + hypoblast."
+explain:"Prostat mengelilingi uretra prostatika."
 },
 
-// ===== LECTURE 8 =====
 {
-q:"2. Payudara primigravida?",
-options:["Lebih menonjol","Lebih kecil","Tidak","Berikutnya","Sementara"],
+q:"99. Manakah pernyataan dibawah ini benar tentang vas deferens?",
+options:[
+"Mukosa dilapisi oleh epitel kolumnar berlapis semu dengan stereocilia",
+"Cilia",
+"Transisional",
+"Otot skelet",
+"Kolumnar"
+],
 answer:0,
-explain:"Lebih jelas."
+explain:"Ciri khas: stereocilia."
 },
+
 {
-q:"12. Amenorea pasti?",
-options:["<3","3-5","6-9",">10",">2 minggu"],
+q:"1. Perkembangan sel sperma dari spermatogonium menjadi spermatocyt dirangsang oleh hormon yang dihasilkan oleh kelenjar hipofise yaitu?",
+options:["FSH","Testosterone","LH","GnRH","Androgen"],
+answer:0,
+explain:"FSH merangsang sel Sertoli."
+},
+
+{
+q:"68. Pertumbuhan rambut pubertas dikendalikan oleh hormon?",
+options:["Androgen","Testosterone","FSH","LH","GnRH"],
+answer:0,
+explain:"Rambut dipengaruhi androgen."
+},
+
+{
+q:"9. Ovulasi terjadi karena?",
+options:[
+"Lonjakan LH",
+"FSH turun",
+"Progesteron turun",
+"Estrogen turun",
+"Prolaktin"
+],
+answer:0,
+explain:"LH surge memicu ovulasi."
+},
+
+{
+q:"37. Fase luteal ditandai oleh?",
+options:[
+"Progesteron lebih tinggi dari estrogen",
+"Estrogen dominan",
+"GnRH dominan",
+"LH tinggi",
+"Progesteron turun"
+],
+answer:0,
+explain:"Progesteron dominan."
+},
+
+{
+q:"6. Perbedaan embryonic dan obstetric date?",
+options:[
+"Obstetric date 2 minggu lebih awal",
+"Embryonic lebih awal",
+"Sama",
+"4 minggu",
+"Tidak pasti"
+],
+answer:0,
+explain:"Obstetric dihitung dari HPHT."
+},
+
+{
+q:"62. Kelainan genetik dengan simian crease dan almond eyes?",
+options:["Down syndrome","Turner","Edward","Patau","Klinefelter"],
+answer:0,
+explain:"Down syndrome."
+},
+
+{
+q:"77. Pemeriksaan pasti kelainan janin?",
+options:[
+"Amniocentesis",
+"NIPT",
+"Maternal test",
+"Serum screening",
+"USG"
+],
+answer:0,
+explain:"Diagnosis pasti = amniocentesis."
+},
+
+{
+q:"93. Peristiwa minggu kedua embrio?",
+options:[
+"Bilaminar germ disc",
+"Trilaminar",
+"Somite",
+"Migrasi",
+"Gastrulasi"
+],
+answer:0,
+explain:"Epiblast dan hypoblast."
+},
+
+{
+q:"2. Perubahan payudara pada kehamilan pertama?",
+options:[
+"Lebih menonjol",
+"Lebih kecil",
+"Tidak ada",
+"Hanya berikutnya",
+"Sementara"
+],
+answer:0,
+explain:"Primigravida lebih jelas."
+},
+
+{
+q:"12. Amenorea tanda pasti kehamilan?",
+options:[
+"<3 hari","3-5 hari","6-9 hari",">10 hari",">2 minggu"
+],
 answer:4,
 explain:">2 minggu."
 },
+
 {
-q:"27. EDD?",
-options:["+7 hari","-7","+7 bulan","-7 bulan","+3"],
+q:"27. Cara menghitung EDD?",
+options:[
+"Menambahkan 7 hari ke LMP",
+"Mengurangi 7 hari",
+"+7 bulan",
+"-7 bulan",
+"+3 hari"
+],
 answer:0,
-explain:"Naegele."
-},
-{
-q:"95. Engagement?",
-options:["20","28","32","36","40"],
-answer:3,
-explain:"36 minggu."
+explain:"Naegele rule."
 },
 
-// ===== LECTURE 9 =====
 {
-q:"30. Postmaturus?",
-options:["<20","28",">42","<500g",">4kg"],
+q:"95. Engagement kepala janin?",
+options:[
+"20 minggu","28 minggu","32 minggu","36 minggu","40 minggu"
+],
+answer:3,
+explain:"Nullipara ±36 minggu."
+},
+
+{
+q:"30. Partus postmaturus?",
+options:[
+"<20 minggu",">28 minggu",">42 minggu","<500g",">4kg"
+],
 answer:2,
 explain:">42 minggu."
 },
+
 {
 q:"67. Presentasi occiput?",
-options:["Kepala bawah","Kepala atas","Bokong","Bahu","Lintang"],
+options:[
+"Kepala di bawah",
+"Kepala di atas",
+"Bokong",
+"Bahu",
+"Lintang"
+],
 answer:0,
 explain:"Occiput = kepala."
 },
+
 {
-q:"83. Fase aktif nullipara?",
-options:["2.5","4.9","8","11.7","15"],
+q:"83. Durasi fase aktif nullipara?",
+options:[
+"2.5 jam","4.9 jam","8 jam","11.7 jam","15 jam"
+],
 answer:3,
-explain:"±11.7 jam."
+explain:"Rata-rata 11.7 jam."
 },
+
 {
-q:"88. Immaturus?",
-options:["20-24","24-28","28-32","32-36","36-40"],
+q:"88. Partus immaturus?",
+options:[
+"20-24","24-28","28-32","32-36","36-40"
+],
 answer:1,
 explain:"24–28 minggu."
 },
 
-// ===== LECTURE 10 =====
 {
-q:"7. Tidak perlu rujuk?",
-options:["Nyeri saja","Benjolan","Abses","Postmenopause","Cairan >50"],
+q:"7. Kelainan payudara yang tidak perlu dirujuk?",
+options:[
+"Nyeri tanpa massa",
+"Benjolan",
+"Abses",
+"Nyeri postmenopause",
+"Cairan >50 tahun"
+],
 answer:0,
 explain:"Fisiologis."
 },
+
 {
-q:"20. ANDI bukan growth?",
-options:["Makrokista","Fibroadenoma","Hipertrofi","Mastalgia","Nodul"],
+q:"20. ANDI yang bukan masa pertumbuhan?",
+options:[
+"Makrokista","Fibroadenoma","Hipertrofi juvenil","Mastalgia sistika","Nodul"
+],
 answer:0,
 explain:"Makrokista fase involusi."
 },
+
 {
-q:"42. Fibroadenoma?",
-options:["Excision","Tidak","Intracapsular","Jika besar","Permintaan"],
+q:"42. Terapi fibroadenoma?",
+options:[
+"Extracapsular excision",
+"Tidak perlu",
+"Intracapsular",
+"Jika membesar",
+"Permintaan"
+],
 answer:0,
 explain:"Excision."
 },
+
 {
-q:"75. Keluhan tersering?",
-options:["Benjolan","Inflamasi","Nyeri","Cairan","Distorsi"],
+q:"75. Keluhan payudara tersering?",
+options:[
+"Benjolan","Inflamasi","Nyeri","Cairan","Distorsi"
+],
 answer:2,
-explain:"Mastalgia paling sering."
+explain:"Nyeri (mastalgia)."
 },
 
-// ===== LECTURE 11 =====
 {
-q:"19. Kelainan 12%?",
-options:["Balanced","Robertsonian","Turner","Klinefelter","Trisomy21"],
+q:"19. Kelainan kromosom 12%?",
+options:[
+"Balanced","Robertsonian","Turner","Klinefelter","Trisomy 21"
+],
 answer:1,
-explain:"Robertsonian."
+explain:"Robertsonian translocation."
 },
+
 {
-q:"28. Gonore & klamidia?",
-options:["Tidak","Antibiotik","Diabaikan","Tidak penting","Tidak tindakan"],
+q:"28. Penanganan gonore dan klamidia?",
+options:[
+"Tidak diobati","Antibiotik","Diabaikan","Tidak penting","Tidak ada tindakan"
+],
 answer:1,
 explain:"Harus diobati."
 },
+
 {
-q:"70. >10 minggu abortus?",
-options:["Tetap","Keluar bersama","Jarang","Janin keluar dulu","Plasenta keluar"],
+q:"70. Setelah 10 minggu abortus?",
+options:[
+"Tetap","Keluar bersama","Jarang","Janin keluar plasenta tertinggal","Plasenta keluar dulu"
+],
 answer:3,
 explain:"Janin keluar dulu."
 },
+
 {
-q:"79. Cegah alloimunisasi?",
-options:["Paracetamol","Bed rest","Anti-D","NSAID","Evakuasi"],
+q:"79. Pencegahan alloimunisasi?",
+options:[
+"Paracetamol","Bed rest","Anti-D immunoglobulin","NSAID","Evakuasi"
+],
 answer:2,
 explain:"Anti-D."
 },
 
-// ===== LECTURE 12 =====
 {
-q:"5. PPH awal?",
-options:["Masase","Cek plasenta","Infus","Rujuk","Bantuan"],
+q:"5. Tindakan pertama PPH?",
+options:[
+"Masase uterus","Cek plasenta","Infus","Rujuk","Minta bantuan"
+],
 answer:0,
 explain:"Masase uterus."
 },
+
 {
-q:"10. Abortus iminens?",
-options:["Iminens","Insipiens","Inkomplet","Missed","Ektopik"],
+q:"10. Diagnosis abortus iminens?",
+options:[
+"Abortus iminens","Insipiens","Inkomplet","Missed","Ektopik"
+],
 answer:0,
 explain:"Serviks tertutup."
 },
+
 {
-q:"14. Preeklampsia berat?",
-options:["Eklampsia","Preeklampsia berat","Ringan","Gestasional","Superimposed"],
+q:"14. Diagnosis preeklampsia berat?",
+options:[
+"Eklampsia","Preeklampsia berat","Ringan","Gestasional","Superimposed"
+],
 answer:1,
 explain:"TD tinggi + proteinuria."
 },
+
 {
-q:"92. Plasenta belum lahir?",
-options:["Infus","Masase + meneran","Manual","Oksitosin","Methergin"],
+q:"92. Plasenta belum lahir 15 menit?",
+options:[
+"Infus","Masase fundus + meneran","Manual","Oksitosin","Methergin"
+],
 answer:1,
 explain:"Masase dulu."
 }
 
 ];
 
-function load(){
+function startQuiz(){
+document.getElementById("home").style.display="none";
+document.getElementById("quizContainer").style.display="block";
+loadQuestion();
+}
+
+function loadQuestion(){
 answered=false;
 document.getElementById("explain").style.display="none";
 
-let q=questions[current];
-document.getElementById("question").innerText=q.q;
+let q = questions[current];
+document.getElementById("question").innerText = q.q;
 
 let html="";
 q.options.forEach((opt,i)=>{
@@ -338,7 +550,7 @@ function check(i){
 if(answered) return;
 answered=true;
 
-let q=questions[current];
+let q = questions[current];
 let labels=document.querySelectorAll("label");
 
 labels.forEach((l,index)=>{
@@ -355,13 +567,11 @@ document.getElementById("explain").innerText="Penjelasan: "+q.explain;
 function next(){
 current++;
 if(current<questions.length){
-load();
+loadQuestion();
 }else{
 document.body.innerHTML=`<h2 style="text-align:center;">SELESAI 🎉<br>Score: ${score}/${questions.length}</h2>`;
 }
 }
-
-load();
 </script>
 
 </body>
