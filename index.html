@@ -72,12 +72,7 @@ body { font-family: Arial; margin:0; background:#f5f5f5; }
 </div>
 
 <script>
-    function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
+
 let current = 0;
 let score = 0;
 let answered = false;
@@ -531,60 +526,40 @@ explain:"Masase dulu."
 ];
 
 function startQuiz(){
-  shuffleArray(questions); // ⬅️ ini bikin soal keacak
-  document.getElementById("home").style.display="none";
-  document.getElementById("quizContainer").style.display="block";
-  load();
+home.style.display="none";
+quizContainer.style.display="block";
+load();
 }
 
 function load(){
-  answered=false;
-  document.getElementById("explain").style.display="none";
+answered=false;
+explain.style.display="none";
+let q=questions[current];
+question.innerText=q.q;
 
-  let q = questions[current];
-
-  // gabungkan opsi + tandain mana yang benar
-  let opts = q.options.map((opt, i) => ({
-    text: opt,
-    correct: i === q.answer
-  }));
-
-  // acak opsi
-  shuffleArray(opts);
-
-  document.getElementById("question").innerText = q.q;
-
-  let html="";
-  opts.forEach((o,i)=>{
-    html += `
-    <label>
-      <input type="radio" name="opt" onclick="check(${i})">
-      ${String.fromCharCode(65+i)}. ${o.text}
-    </label>`;
-  });
-
-  document.getElementById("options").innerHTML = html;
-
-  // simpan versi shuffle
-  window.currentOptions = opts;
+let html="";
+q.options.forEach((o,i)=>{
+html+=`<label><input type="radio" name="opt" onclick="check(${i})"> ${String.fromCharCode(65+i)}. ${o}</label>`;
+});
+options.innerHTML=html;
 }
-    
+
 function check(i){
-  if(answered) return;
-  answered=true;
+if(answered) return;
+answered=true;
 
-  let labels = document.querySelectorAll("label");
+let q=questions[current];
+let labels=document.querySelectorAll("label");
 
-  labels.forEach((l,idx)=>{
-    if(window.currentOptions[idx].correct) l.classList.add("correct");
-    if(idx==i && !window.currentOptions[idx].correct) l.classList.add("wrong");
-  });
+labels.forEach((l,idx)=>{
+if(idx==q.answer) l.classList.add("correct");
+if(idx==i && i!=q.answer) l.classList.add("wrong");
+});
 
-  if(window.currentOptions[i].correct) score++;
+if(i==q.answer) score++;
 
-  document.getElementById("explain").style.display="block";
-  document.getElementById("explain").innerText =
-    "Penjelasan: " + questions[current].explain;
+explain.style.display="block";
+explain.innerText="Penjelasan: "+q.explain;
 }
 
 function next(){
