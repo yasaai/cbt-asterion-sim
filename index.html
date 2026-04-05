@@ -567,13 +567,24 @@ document.getElementById("explain").style.display="block";
 document.getElementById("explain").innerText="Penjelasan: "+q.explain;
 }
 
-function next(){
-current++;
-if(current<questions.length){
-loadQuestion();
-}else{
-document.body.innerHTML=`<h2 style="text-align:center;">SELESAI 🎉<br>Score: ${score}/${questions.length}</h2>`;
+function check(i){
+if(answered) return;
+answered=true;
+
+let q = questions[current];
+let labels = document.querySelectorAll("#options label");
+
+labels.forEach((l,index)=>{
+if(index == q.answer) l.classList.add("correct");
+if(index == i && i != q.answer) l.classList.add("wrong");
+});
+
+if(i == q.answer) score++;
+
+document.getElementById("explain").style.display = "block";
+document.getElementById("explain").innerText = "Penjelasan: " + q.explain;
 }
+
 }
 </script>
 
