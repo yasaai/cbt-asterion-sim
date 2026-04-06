@@ -1,1 +1,1 @@
-# lect-1-12-cbt-asterion
+#cbt-asterion
